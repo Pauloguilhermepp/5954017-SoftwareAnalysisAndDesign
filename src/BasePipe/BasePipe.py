@@ -2,8 +2,8 @@ class BasePipe:
     def start(self):
         pass
 
-    def filter(self):
+    def _filter(self):
         pass
 
-    def next(self):
+    def _next(self):
         pass

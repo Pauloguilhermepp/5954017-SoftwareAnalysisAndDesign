@@ -1,9 +1,9 @@
 import sys
 import sqlite3 as sql
+from PySimpleGUI import PySimpleGUI as sg
 
 sys.path.append("./")
 from BasePipe.BasePipe import BasePipe
-from PySimpleGUI import PySimpleGUI as sg
 
 
 class Login(BasePipe):
@@ -67,6 +67,10 @@ class Login(BasePipe):
 
         statement = "SELECT user_name from users WHERE user_name=? AND user_password=?;"
         query_info = self._last_values["user"], self._last_values["password"]
-        cur.execute(statement, query_info)
+
+        try:
+            cur.execute(statement, query_info)
+        except sql.OperationalError:
+            pass
 
         return cur.fetchone()

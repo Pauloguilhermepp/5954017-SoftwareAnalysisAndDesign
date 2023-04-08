@@ -1,9 +1,9 @@
 import sys
 import sqlite3 as sql
-from Login.NewUser import NewUser
 from PySimpleGUI import PySimpleGUI as sg
 
 sys.path.append("./")
+from NewUser.NewUser import NewUser
 from BasePipe.BasePipe import BasePipe
 
 
@@ -34,7 +34,7 @@ class Login(BasePipe):
         while self._window_on:
             self._window_read()
             self._window_check_events()
-        
+
         self._window.close()
 
     def _window_read(self):
@@ -83,7 +83,7 @@ class Login(BasePipe):
 
     def _check_new_user(self):
         return self._last_events == "Add new user"
-    
+
     def _add_new_user(self):
         nw = NewUser()
         nw.start()

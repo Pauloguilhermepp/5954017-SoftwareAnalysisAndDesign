@@ -1,5 +1,4 @@
 import sys
-import time
 import sqlite3 as sql
 
 sys.path.append("./")
@@ -23,7 +22,7 @@ class NewUser(BasePipe):
         layout = [
             [sg.Text("Name", size=(10, 0)), sg.Input(key="name", size=(20, 0))],
             [sg.Text("Password", size=(10, 0)), sg.Input(key="password", size=(20, 0))],
-            [sg.Button("Create"), sg.Text("", key="message")]
+            [sg.Button("Create"), sg.Text("", key="message")],
         ]
 
         self._window_on = True
@@ -33,7 +32,7 @@ class NewUser(BasePipe):
         while self._window_on:
             self._window_read()
             self._window_check_events()
-        
+
         self._window.close()
 
     def _window_read(self):
@@ -67,26 +66,24 @@ class NewUser(BasePipe):
 
         statement = "SELECT user_name from users WHERE user_name=?;"
         query_info = (self._last_values["name"],)
-        
+
         try:
             cur.execute(statement, query_info)
         except sql.OperationalError:
             pass
 
         return not cur.fetchone()
-    
+
     def _add_new_user(self):
-        conn = sql.connect("./Data/main_database.db") 
+        conn = sql.connect("./Data/main_database.db")
         cur = conn.cursor()
 
         statement = """
                     CREATE TABLE IF NOT EXISTS users
                     ([user_name] TEXT PRIMARY KEY, [user_password] TEXT)
                     """
-        try:
-            cur.execute(statement)
-        except sql.OperationalError:
-            pass
+
+        cur.execute(statement)
 
         statement = """
                     INSERT INTO users (user_name, user_password) 
@@ -94,10 +91,7 @@ class NewUser(BasePipe):
                     (?, ?)
                     """
         query_info = self._last_values["name"], self._last_values["password"]
-        
-        try:
-            cur.execute(statement, query_info)
-        except sql.OperationalError:
-            pass
-                            
+
+        cur.execute(statement, query_info)
+
         conn.commit()

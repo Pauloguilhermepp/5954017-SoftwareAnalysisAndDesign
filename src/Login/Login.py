@@ -1,5 +1,6 @@
 import sys
 import sqlite3 as sql
+from Login.NewUser import NewUser
 from PySimpleGUI import PySimpleGUI as sg
 
 sys.path.append("./")
@@ -23,6 +24,7 @@ class Login(BasePipe):
             [sg.Text("User", size=(10, 0)), sg.Input(key="user", size=(20, 0))],
             [sg.Text("Password", size=(10, 0)), sg.Input(key="password", size=(20, 0))],
             [sg.Button("Login"), sg.Text("", key="message")],
+            [sg.Button("Add new user", size=(30, 1))],
         ]
 
         self._window_on = True
@@ -32,6 +34,8 @@ class Login(BasePipe):
         while self._window_on:
             self._window_read()
             self._window_check_events()
+        
+        self._window.close()
 
     def _window_read(self):
         self._last_events, self._last_values = self._window.read()
@@ -41,6 +45,8 @@ class Login(BasePipe):
             self._window_on = False
         elif self._filter():
             self._next()
+        elif self._check_new_user():
+            self._add_new_user()
 
     def _close(self):
         return self._last_events == sg.WINDOW_CLOSED
@@ -74,3 +80,10 @@ class Login(BasePipe):
             pass
 
         return cur.fetchone()
+
+    def _check_new_user(self):
+        return self._last_events == "Add new user"
+    
+    def _add_new_user(self):
+        nw = NewUser()
+        nw.start()

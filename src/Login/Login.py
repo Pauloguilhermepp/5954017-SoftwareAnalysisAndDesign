@@ -1,4 +1,5 @@
 import sys
+import sqlite3 as sql
 
 sys.path.append("./")
 from BasePipe.BasePipe import BasePipe
@@ -38,18 +39,27 @@ class Login(BasePipe):
     def _window_check_events(self):
         if self._close():
             self._window_on = False
-        elif self._login_attempt():
-            if self._check_user_and_password():
-                print("Logged")
+        elif self._filter():
+            self._next()
 
     def _close(self):
         return self._last_events == sg.WINDOW_CLOSED
+
+    def _filter(self):
+        return self._login_attempt() and self._check_user_and_password()
+
+    def _next(self):
+        print("Logged")
 
     def _login_attempt(self):
         return self._last_events == "Login"
 
     def _check_user_and_password(self):
-        return (
-            self._last_values["user"] == "name"
-            and self._last_values["password"] == "123"
-        )
+        con = sql.connect("./Data/main_database.db")
+        cur = con.cursor()
+
+        statement = "SELECT user_name from users WHERE user_name=? AND user_password=?;"
+        query_info = self._last_values["user"], self._last_values["password"]
+        cur.execute(statement, query_info)
+
+        return cur.fetchone()

@@ -22,7 +22,7 @@ class Login(BasePipe):
         layout = [
             [sg.Text("User", size=(10, 0)), sg.Input(key="user", size=(20, 0))],
             [sg.Text("Password", size=(10, 0)), sg.Input(key="password", size=(20, 0))],
-            [sg.Button("Login")],
+            [sg.Button("Login"), sg.Text("", key="message")],
         ]
 
         self._window_on = True
@@ -46,7 +46,14 @@ class Login(BasePipe):
         return self._last_events == sg.WINDOW_CLOSED
 
     def _filter(self):
-        return self._login_attempt() and self._check_user_and_password()
+        if self._login_attempt():
+            if self._check_user_and_password():
+                self._window["message"].update("Logged with success!")
+                return True
+
+            self._window["message"].update("User or password incorrect!")
+
+        return False
 
     def _next(self):
         print("Logged")

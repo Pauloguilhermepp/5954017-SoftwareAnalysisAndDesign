@@ -5,18 +5,20 @@ from PySimpleGUI import PySimpleGUI as sg
 sys.path.append("./")
 from NewUser.NewUser import NewUser
 from BasePipe.BasePipe import BasePipe
-
+from MainMenu.MainMenu import MainMenu
 
 class Login(BasePipe):
     def __init__(self):
         self._window = None
         self._window_on = False
+        self._main_menu_window = False
         self._last_events = None
         self._last_values = None
 
     def start(self):
         self._window_config()
         self._window_screen()
+        self._filter()
 
     def _window_config(self):
         sg.theme("DarkAmber")
@@ -43,8 +45,9 @@ class Login(BasePipe):
     def _window_check_events(self):
         if self._close():
             self._window_on = False
-        elif self._filter():
-            self._next()
+        elif self._check_login():
+            self._window_on = False
+            self._main_menu_window = True
         elif self._check_new_user():
             self._add_new_user()
 
@@ -52,6 +55,10 @@ class Login(BasePipe):
         return self._last_events == sg.WINDOW_CLOSED
 
     def _filter(self):
+        if self._main_menu_window:
+            self._next()
+    
+    def _check_login(self):
         if self._login_attempt():
             if self._check_user_and_password():
                 self._window["message"].update("Logged with success!")
@@ -62,7 +69,8 @@ class Login(BasePipe):
         return False
 
     def _next(self):
-        print("Logged")
+        menu = MainMenu()
+        menu.start()
 
     def _login_attempt(self):
         return self._last_events == "Login"

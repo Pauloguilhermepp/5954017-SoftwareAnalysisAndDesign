@@ -3,7 +3,7 @@ from PySimpleGUI import PySimpleGUI as sg
 
 sys.path.append("./")
 from BasePipe.BasePipe import BasePipe
-
+from DataWindow.DataWindow import DataWindow
 
 class MainMenu(BasePipe):
     def __init__(self):
@@ -54,7 +54,8 @@ class MainMenu(BasePipe):
         return self._last_events == button
     
     def _load_data(self):
-        print("Load data")
+        dw = DataWindow()
+        dw.start()
     
     def _load_model(self):
         print("Load model")

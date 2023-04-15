@@ -18,7 +18,7 @@ class MainMenu(BasePipe):
         self._window_screen()
 
     def _window_config(self):
-        sg.theme("DarkAmber")
+        sg.theme("DarkTeal11")
         layout = [
             [
                 sg.Button("Data", size=(20, 5)),

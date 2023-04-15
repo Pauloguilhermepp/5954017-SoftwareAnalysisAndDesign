@@ -18,7 +18,7 @@ class NewUser(BasePipe):
         self._window_screen()
 
     def _window_config(self):
-        sg.theme("DarkAmber")
+        sg.theme("DarkTeal11")
         layout = [
             [sg.Text("Name", size=(10, 0)), sg.Input(key="name", size=(20, 0))],
             [sg.Text("Password", size=(10, 0)), sg.Input(key="password", size=(20, 0))],

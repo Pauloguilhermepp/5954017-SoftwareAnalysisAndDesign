@@ -22,7 +22,7 @@ class Login(BasePipe):
         self._filter()
 
     def _window_config(self):
-        sg.theme("DarkAmber")
+        sg.theme("DarkTeal11")
         layout = [
             [sg.Text("User", size=(10, 0)), sg.Input(key="user", size=(20, 0))],
             [sg.Text("Password", size=(10, 0)), sg.Input(key="password", size=(20, 0))],

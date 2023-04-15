@@ -5,6 +5,7 @@ sys.path.append("./")
 from BasePipe.BasePipe import BasePipe
 from DataWindow.DataWindow import DataWindow
 
+
 class MainMenu(BasePipe):
     def __init__(self):
         self._window = None
@@ -19,10 +20,12 @@ class MainMenu(BasePipe):
     def _window_config(self):
         sg.theme("DarkAmber")
         layout = [
-            [sg.Button("Data", size=(20, 5)),
-            sg.Button("Model", size=(20, 5)),
-            sg.Button("Devops", size=(20, 5)),
-            sg.Button("Monitor", size=(20, 5))],
+            [
+                sg.Button("Data", size=(20, 5)),
+                sg.Button("Model", size=(20, 5)),
+                sg.Button("Devops", size=(20, 5)),
+                sg.Button("Monitor", size=(20, 5)),
+            ],
         ]
 
         self._window_on = True
@@ -49,20 +52,20 @@ class MainMenu(BasePipe):
             self._load_devops()
         elif self._check_button("Monitor"):
             self._load_monitor()
-    
+
     def _check_button(self, button):
         return self._last_events == button
-    
+
     def _load_data(self):
         dw = DataWindow()
         dw.start()
-    
+
     def _load_model(self):
         print("Load model")
-    
+
     def _load_devops(self):
         print("Load devops")
-    
+
     def _load_monitor(self):
         print("Load monitor")
 

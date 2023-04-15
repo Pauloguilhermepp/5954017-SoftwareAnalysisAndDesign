@@ -7,6 +7,7 @@ from NewUser.NewUser import NewUser
 from BasePipe.BasePipe import BasePipe
 from MainMenu.MainMenu import MainMenu
 
+
 class Login(BasePipe):
     def __init__(self):
         self._window = None
@@ -57,7 +58,7 @@ class Login(BasePipe):
     def _filter(self):
         if self._main_menu_window:
             self._next()
-    
+
     def _check_login(self):
         if self._login_attempt():
             if self._check_user_and_password():

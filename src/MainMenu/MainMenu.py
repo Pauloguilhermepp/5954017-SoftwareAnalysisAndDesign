@@ -3,6 +3,7 @@ from PySimpleGUI import PySimpleGUI as sg
 
 sys.path.append("./")
 from BasePipe.BasePipe import BasePipe
+from Monitor.Monitor import Monitor
 from DevWindow.DevWindow import DevWindow
 from DataWindow.DataWindow import DataWindow
 
@@ -68,7 +69,8 @@ class MainMenu(BasePipe):
         dev_win.start()
 
     def _load_monitor(self):
-        print("Load monitor")
+        mon = Monitor()
+        mon.start()
 
     def _close(self):
         return self._last_events == sg.WINDOW_CLOSED

@@ -3,8 +3,8 @@ from PySimpleGUI import PySimpleGUI as sg
 
 sys.path.append("./")
 from BasePipe.BasePipe import BasePipe
+from DevWindow.DevWindow import DevWindow
 from DataWindow.DataWindow import DataWindow
-
 
 class MainMenu(BasePipe):
     def __init__(self):
@@ -23,7 +23,7 @@ class MainMenu(BasePipe):
             [
                 sg.Button("Data", size=(20, 5)),
                 sg.Button("Model", size=(20, 5)),
-                sg.Button("Devops", size=(20, 5)),
+                sg.Button("Development", size=(20, 5)),
                 sg.Button("Monitor", size=(20, 5)),
             ],
         ]
@@ -48,8 +48,8 @@ class MainMenu(BasePipe):
             self._load_data()
         elif self._check_button("Model"):
             self._load_model()
-        elif self._check_button("Devops"):
-            self._load_devops()
+        elif self._check_button("Development"):
+            self._load_development()
         elif self._check_button("Monitor"):
             self._load_monitor()
 
@@ -63,8 +63,9 @@ class MainMenu(BasePipe):
     def _load_model(self):
         print("Load model")
 
-    def _load_devops(self):
-        print("Load devops")
+    def _load_development(self):
+        dev_win = DevWindow()
+        dev_win.start()
 
     def _load_monitor(self):
         print("Load monitor")

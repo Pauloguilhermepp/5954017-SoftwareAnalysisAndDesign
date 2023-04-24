@@ -6,6 +6,7 @@ from BasePipe.BasePipe import BasePipe
 from Monitor.Monitor import Monitor
 from DevWindow.DevWindow import DevWindow
 from DataWindow.DataWindow import DataWindow
+from ModelWindow.ModelWindow import ModelWindow
 
 class MainMenu(BasePipe):
     def __init__(self):
@@ -62,7 +63,8 @@ class MainMenu(BasePipe):
         dw.start()
 
     def _load_model(self):
-        print("Load model")
+        model_win = ModelWindow()
+        model_win.start()
 
     def _load_development(self):
         dev_win = DevWindow()
